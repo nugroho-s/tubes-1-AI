@@ -37,6 +37,8 @@ class ruang{
 	ruangan ruangke[] = new ruangan[100] ;
 }
 
+
+
 /*
 Ruangan
 Nama; Jam Mulai; Jam Selesai; Hari
@@ -266,6 +268,10 @@ public class bacafile {
 					System.out.println("Mulai		:" + oo.ruangke[ii].mulai.jam+"."+oo.ruangke[ii].mulai.menit);
 					System.out.println("Selesai		:" + oo.ruangke[ii].selesai.jam+"."+oo.ruangke[ii].selesai.menit);
 					System.out.println("Banyak hari	:" + oo.ruangke[ii].hari.banyak);
+					for(int hari : oo.ruangke[ii].hari.harike){
+						System.out.print(hari+" ");
+					}
+					System.out.println();
 			}
 			System.out.println();
 			System.out.println("Untuk Penjadwalan ");
@@ -280,6 +286,10 @@ public class bacafile {
 					System.out.println("Selesai		:" + uu.jadwalke[ii].jamselesai.jam+"."+uu.jadwalke[ii].jamselesai.menit);
 					System.out.println("Durasi		:" + uu.jadwalke[ii].durasi);
 					System.out.println("Banyak hari	:" + uu.jadwalke[ii].hari.banyak);
+					for(int hari : oo.ruangke[ii].hari.harike){
+						System.out.print(hari+" ");
+					}
+					System.out.println();
 			}
         } 
         catch (FileNotFoundException fnfe) {
