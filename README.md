@@ -22,40 +22,48 @@ IF3111;-;07.00;12.00;2;1,2,3,4,5<br />
 
 ### Classes
 
-**bacafile.java**: class bacafile {<br />
-	// attributes<br />
-	<br />
-	// methods<br /> 
-}<br />
+**bacafile.java**:<br />
+> * class bacafile {<br />
+> * // attributes<br />
+> * <br />
+> * // methods<br /> 
+> * }<br />
 
-**ruangan.java**: class ruangan {<br />
-	// attributes<br />
-	nama : <br />
-	jam_mulai :<br />
-	jam_akhir :<br />
-	ArrayList<slot> sl :<br />
-	<br />
-	// methods<br />
-	...<br />
-}<br />
+**ruangan.java**:<br />
+> * class ruangan {<br />
+> * // attributes<br />
+> * nama : <br />
+> * jam_mulai :<br />
+> * jam_akhir :<br />
+> * ArrayList<slot> sl :<br />
+> * <br />
+> * // methods<br />
+> * ...<br />
+> * }<br />
 
-**slot.java**: class slot {<br />
-	// attributes<br />
-	key :<br />
-	nama :<br />
-	waktu :<br />
-	<br />
-	// methods<br />
-	...<br />
-}<br />
+**slot.java**:<br />
+> * class slot {<br />
+> * // attributes<br />
+> * key :<br />
+> * nama :<br />
+> * waktu :<br />
+> * <br />
+> * // methods<br />
+> * ...<br />
+> * }<br />
 
-**daftarjadwal.java**: class daftarjadwal {<br />
-	// attributes<br />
-	ArrayList<ruangan> ruangan :<br />
-	<br />
-	// methods<br />
-	int hitungbentrok();<br />
-}<br />
+**daftarjadwal.java**:<br />
+> * class daftarjadwal {<br />
+> * // attributes<br />
+> * ArrayList<ruangan> ruangan :<br />
+> * <br />
+> * // methods<br />
+> * int hitungbentrok();<br />
+> * }<br />
+
+### GUI
+> * Halaman awal: browse lokasi file yang akan dibaca
+> * Halaman utama: menampilkan hasil
 
 ### Lain-lain
 
