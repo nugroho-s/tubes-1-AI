@@ -211,7 +211,7 @@ class file {
         String[] day = temp[3].split(",");
         day hari = new day();
         for (int i = 0; i < day.length; i++) {
-            hari.hari[Integer.parseInt(day[i])] = true;
+            hari.set_hari(Integer.parseInt(day[i]), true);
         }
         main.ruang[main.j_ruang++] = new ruangan(temp[0], mulai, selesai, hari);
     }
@@ -222,8 +222,8 @@ class file {
         waktu selesai = waktu.konversikewaktu(temp[3]);
         String[] day = temp[5].split(",");
         day hari = new day();
-        for (String item : day) {
-            hari.hari[Integer.parseInt(item)] = true;
+        for (int i = 0; i < day.length; i++) {
+            hari.set_hari(Integer.parseInt(day[i]), true);
         }
         main.kuliah[main.j_kuliah++] = new mataKuliah(temp[0], temp[1], mulai, selesai, Integer.parseInt(temp[4]), hari);
     }
