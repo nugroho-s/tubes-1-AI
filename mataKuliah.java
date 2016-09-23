@@ -1,7 +1,7 @@
 public class mataKuliah {
 
     String nama;
-    String ruang;
+    ruangan ruang;
     waktu mulai;
     waktu selesai;
     int sks;
@@ -9,7 +9,7 @@ public class mataKuliah {
 
     public mataKuliah(String n, String r, waktu m, waktu s, int sk, day h) {
         nama = n;
-        ruang = r;
+        ruang = search_ruang(r);
         mulai = m;
         selesai = s;
         hari = h;
@@ -17,8 +17,24 @@ public class mataKuliah {
     }
 
     public String toString() {
-        return ("Nama: " + get_nama() + "\nRuangan: " + get_ruang() + "\nWaktu mulai: " + get_mulai()
+        if (ruang == null){
+            return ("Nama: " + get_nama() + "\nRuangan: -" + "\nWaktu mulai: " + get_mulai()
                 + "\nWaktu selesai: " + get_selesai() + "\nJumlah SKS: " + get_sks() + "\nhari: " + get_hari());
+        }
+        return ("Nama: " + get_nama() + "\nRuangan: " + get_ruang().get_nama() + "\nWaktu mulai: " + get_mulai()
+                + "\nWaktu selesai: " + get_selesai() + "\nJumlah SKS: " + get_sks() + "\nhari: " + get_hari());
+    }
+    
+    public ruangan search_ruang(String r){
+        if (r.equals("-")){
+            return null;
+        }
+        for (int i = 0; i < file.j_ruang; i++) {
+			if (r.equals((file.ruang[i]).nama)){
+                return file.ruang[i];
+            }
+        }
+        return null;
     }
 
     public String get_nama() {
@@ -28,13 +44,13 @@ public class mataKuliah {
     public void set_nama(String n) {
         nama = n;
     }
-
-    public String get_ruang() {
+    
+    public ruangan get_ruang(){
         return ruang;
     }
 
     public void set_ruang(String x) {
-        ruang = x;
+        ruang = search_ruang(x);
     }
 
     public waktu get_mulai() {
