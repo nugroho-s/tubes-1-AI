@@ -22,8 +22,9 @@ public class ruangan {
 
 	public void sortJadwal() {
 			Collections.sort(jadwal, new Comparator<slot>(){
+			@Override
 			public int compare(slot o1, slot o2){
-				return o1.slot_waktu - o1.slot_waktu;
+				return o1.get_slot() - o2.get_slot(); //sort menaik
 			}
 		});
 	}
@@ -69,9 +70,9 @@ public class ruangan {
 	//hitung konflik dari jadwal ruangan, harus sort terlebih dulu
 	public int hitung_konflik(){
 		sortJadwal();
-		/*System.out.println("sesudah sort: ");
+		System.out.println("sesudah sort: ");
 		print_jadwal();
-		System.out.println("=========");*/
+		System.out.println("=========");
 		int konflik = 0;
 		for (int x=0; x<jadwal.size(); x++){
 			int kode = jadwal.get(x).get_slot();
