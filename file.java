@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.util.*;
 
 public class file {
-
+    private static Random rnd = new Random();
     public static String lokasi_file;
 	public static int j_ruang = 0;
 	public static ruangan[] ruang = new ruangan[10];
@@ -14,7 +14,8 @@ public class file {
 	public static void main(String args[]) {
 		set_file("databaca.txt");
 		baca_file();
-		for (int i = 0; i < j_ruang; i++) {
+		/* Validasi baca file
+        for (int i = 0; i < j_ruang; i++) {
 			System.out.println(ruang[i]);
 			System.out.println();
 		}
@@ -23,7 +24,36 @@ public class file {
 			System.out.println(kuliah[i]);
 			System.out.println();
 		}
+        System.out.println();*/
+        System.out.println("=======");
+        System.out.println("Jadwal");
+        inisialisasi_random();
+        for (int i = 0; i < j_ruang; i++) {
+            ruang[i].print_jadwal();
+            System.out.println();
+        }
 	}
+    
+    public static void inisialisasi_random(){
+        for (int i = 0; i < j_kuliah; i++) {
+            ruangan r;
+            if (kuliah[i].get_ruang()!=null){
+                //semua yg memiliki kelas harus dimasukkan
+                r = kuliah[i].get_ruang();
+                r.add_mk_rand(kuliah[i]);
+            }
+            else{
+                //harus dicek apakah kelas bisa menampung mata kuliah
+                do{
+                    int xi = rnd.nextInt(j_ruang);
+                    r = ruang[xi];
+                } while ((r.get_mulai().get_jam()>kuliah[i].get_selesai().get_jam())||
+                (r.get_selesai().get_jam()<kuliah[i].get_mulai().get_jam()+kuliah[i].get_sks())||
+                (!(day.is_intersect(r.get_hari(),kuliah[i].get_hari()))));
+                r.add_mk_rand(kuliah[i]);
+            }
+        }
+    }
 
     public static void set_file(String x) {
         lokasi_file = x;

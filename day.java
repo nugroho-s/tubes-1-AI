@@ -6,7 +6,7 @@ class day {
         String os = "";
         boolean ada = false;
         for (int i = 1; i < 6; i++) {
-            if (hari[i] == true) {
+            if (isOnDay(i)) {
                 if (ada) {
                     os = os.concat(",");
                 }
@@ -15,6 +15,15 @@ class day {
             }
         }
         return os;
+    }
+    
+    //mengembalikan apakah 2 jadwal saling beririsan
+    public static boolean is_intersect(day d1,day d2){
+        for (int i=1;i<6;i++){
+            if (d1.hari[i] == d2.hari[i] == true)
+                return true;
+        }
+        return false;
     }
 
     public boolean isOnDay(int x) {

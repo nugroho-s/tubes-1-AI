@@ -2,6 +2,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.Collections;
+import java.util.Random;
 
 public class ruangan {
 
@@ -10,6 +11,7 @@ public class ruangan {
     waktu selesai;
     day hari;
 	ArrayList<slot> jadwal = new ArrayList<slot>();
+    private static Random rnd = new Random();
 
     public ruangan(String n, waktu m, waktu s, day h) {
         nama = n;
@@ -28,6 +30,40 @@ public class ruangan {
     public String toString() {
         return ("Nama: " + get_nama() + "\n" + "Waktu mulai: " + get_mulai() + "\n"
                 + "Waktu selesai: " + get_selesai() + "\nhari: " + get_hari().toString());
+    }
+    
+    //add mata kuliah ke arraylist jadwal
+    //i.s. waktu sudah benar
+    public void add_mk(mataKuliah mk,int h, int j){
+        jadwal.add(new slot(mk,h,j));
+    }
+    
+    //add mata kuliah dengan random
+    public void add_mk_rand(mataKuliah mk){
+        //random hari 1-5
+        int h = rnd.nextInt(5);
+        h+=1;
+        while (!((get_hari().isOnDay(h)) && (mk.get_hari().isOnDay(h)))){
+            h = rnd.nextInt(5);
+            h+=1;
+        }
+        //random jam 7 - 17
+        int range = mk.get_selesai().get_jam() - mk.get_sks();
+        range = range-mk.get_mulai().get_jam()+1;
+        int jam = rnd.nextInt(range);
+        jam+=mk.get_mulai().get_jam();
+        while ((jam+mk.get_sks()>get_selesai().get_jam())||(jam<get_mulai().get_jam())){
+            jam = rnd.nextInt(range);
+            jam+=mk.get_mulai().get_jam();
+        }
+        add_mk(mk,h,jam);
+    }
+    
+    public void print_jadwal(){
+        System.out.println(get_nama());
+        for (int x=0; x<jadwal.size(); x++){
+            System.out.println(jadwal.get(x));
+        }
     }
 
     public String get_nama() {
@@ -60,5 +96,9 @@ public class ruangan {
 
     public void set_hari(day h) {
         hari = h;
+    }
+    
+    public ArrayList<slot> get_jadwal(){
+        return jadwal;
     }
 }
