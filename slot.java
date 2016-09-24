@@ -14,6 +14,14 @@ public class slot{
 		return slot_waktu%100;
 	}
 	
+	int get_slot(){
+		return slot_waktu;
+	}
+	
+	public mataKuliah get_mk(){
+		return mk;
+	}
+	
 	public String toString(){
 		return (mk.get_nama()+": hari "+get_hari()+" jam "+get_jam());
 	}

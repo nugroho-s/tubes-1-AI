@@ -32,6 +32,17 @@ public class file {
             ruang[i].print_jadwal();
             System.out.println();
         }
+		System.out.println("=======");
+        System.out.println("Konflik = "+hitung_konflik());
+	}
+	
+	public static int hitung_konflik(){
+		int konflik = 0;
+		for (int i=0;i<j_ruang;i++){
+			ruangan r = ruang[i];
+			konflik+=r.hitung_konflik();
+		}
+		return konflik;
 	}
     
     public static void inisialisasi_random(){

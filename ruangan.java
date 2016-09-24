@@ -65,6 +65,32 @@ public class ruangan {
             System.out.println(jadwal.get(x));
         }
     }
+	
+	//hitung konflik dari jadwal ruangan, harus sort terlebih dulu
+	public int hitung_konflik(){
+		sortJadwal();
+		/*System.out.println("sesudah sort: ");
+		print_jadwal();
+		System.out.println("=========");*/
+		int konflik = 0;
+		for (int x=0; x<jadwal.size(); x++){
+			int kode = jadwal.get(x).get_slot();
+			int sks = jadwal.get(x).get_mk().get_sks();
+			boolean debug = (jadwal.size() == 2);
+			int y = x+1;
+			int sama = 0;
+			if (y >= jadwal.size())
+				continue;
+			while ((jadwal.get(y).get_slot() < kode+sks) && (Math.abs(kode-jadwal.get(y).get_slot()) < 50)) {
+				sama++;
+				y++;
+				if (y >= jadwal.size())
+					break;
+			}
+			konflik+=sama;
+		}
+		return konflik;
+	}
 
     public String get_nama() {
         return nama;
