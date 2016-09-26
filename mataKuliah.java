@@ -1,13 +1,16 @@
 public class mataKuliah {
 
+	int id;
     String nama;
     ruangan ruang;
     waktu mulai;
     waktu selesai;
     int sks;
     day hari;
+	int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
 
-    public mataKuliah(String n, String r, waktu m, waktu s, int sk, day h) {
+    public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
+		this.id = id;
         nama = n;
         ruang = search_ruang(r);
         mulai = m;
@@ -36,10 +39,35 @@ public class mataKuliah {
         }
         return null;
     }
+	
+	public void print_jadwal(){
+		System.out.println("Nama: "+get_nama()+"\nRuangan: "+get_ruang().get_nama()
+			+"\nHari: "+get_slot_hari() +"\nJam: "+get_slot_jam()+"\n");
+	}
+	
+	int get_slot_hari(){
+		return slot_waktu/100;
+	}
+	
+	int get_slot_jam(){
+		return slot_waktu%100;
+	}
+	
+	public int get_id(){
+		return id;
+	}
 
     public String get_nama() {
         return nama;
     }
+	
+	public int get_slot(){
+		return slot_waktu;
+	}
+	
+	public void set_slot(int _h, int _j){
+		slot_waktu = _h*100+_j;
+	}
 
     public void set_nama(String n) {
         nama = n;
@@ -52,6 +80,10 @@ public class mataKuliah {
     public void set_ruang(String x) {
         ruang = search_ruang(x);
     }
+	
+	public void set_ruang_ref(ruangan r){
+		ruang = r;
+	}
 
     public waktu get_mulai() {
         return mulai;

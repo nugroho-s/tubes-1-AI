@@ -3,6 +3,11 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.Comparator;
+import java.util.Collections;
+import java.util.Random;
 
 public class file {
     private static Random rnd = new Random();
@@ -10,61 +15,106 @@ public class file {
 	public static int j_ruang = 0;
 	public static ruangan[] ruang = new ruangan[10];
 	public static int j_kuliah = 0;
-	public static mataKuliah[] kuliah = new mataKuliah[10];
+	public static ArrayList<mataKuliah> kuliah = new ArrayList<mataKuliah>();
 	public static void main(String args[]) {
 		set_file("databaca.txt");
 		baca_file();
-		/* Validasi baca file
-        for (int i = 0; i < j_ruang; i++) {
-			System.out.println(ruang[i]);
-			System.out.println();
-		}
-		System.out.println();
-		for (int i = 0; i < j_kuliah; i++) {
-			System.out.println(kuliah[i]);
-			System.out.println();
-		}
-        System.out.println();*/
         System.out.println("=======");
         System.out.println("Jadwal");
         inisialisasi_random();
-        for (int i = 0; i < j_ruang; i++) {
-            ruang[i].print_jadwal();
-            System.out.println();
+        for (int i = 0; i < kuliah.size(); i++) {
+            kuliah.get(i).print_jadwal();
         }
 		System.out.println("=======");
         System.out.println("Konflik = "+hitung_konflik());
 	}
 	
-	public static int hitung_konflik(){
-		int konflik = 0;
-		for (int i=0;i<j_ruang;i++){
-			ruangan r = ruang[i];
-			konflik+=r.hitung_konflik();
-		}
-		return konflik;
+	public void sort_by_id() {
+			Collections.sort(kuliah, new Comparator<mataKuliah>(){
+			@Override
+			public int compare(mataKuliah o1, mataKuliah o2){
+				return o1.get_id() - o2.get_id(); //sort menaik
+			}
+		});
 	}
     
     public static void inisialisasi_random(){
         for (int i = 0; i < j_kuliah; i++) {
             ruangan r;
-            if (kuliah[i].get_ruang()!=null){
+            if (kuliah.get(i).get_ruang()!=null){
                 //semua yg memiliki kelas harus dimasukkan
-                r = kuliah[i].get_ruang();
-                r.add_mk_rand(kuliah[i]);
+                r = kuliah.get(i).get_ruang();
+                add_mk_rand(kuliah.get(i),r);
             }
             else{
                 //harus dicek apakah kelas bisa menampung mata kuliah
                 do{
                     int xi = rnd.nextInt(j_ruang);
                     r = ruang[xi];
-                } while ((r.get_mulai().get_jam()>kuliah[i].get_selesai().get_jam())||
-                (r.get_selesai().get_jam()<kuliah[i].get_mulai().get_jam()+kuliah[i].get_sks())||
-                (!(day.is_intersect(r.get_hari(),kuliah[i].get_hari()))));
-                r.add_mk_rand(kuliah[i]);
+                } while ((r.get_mulai().get_jam()>kuliah.get(i).get_selesai().get_jam())||
+                (r.get_selesai().get_jam()<kuliah.get(i).get_mulai().get_jam()+kuliah.get(i).get_sks())||
+                (!(day.is_intersect(r.get_hari(),kuliah.get(i).get_hari()))));
+                add_mk_rand(kuliah.get(i),r);
             }
         }
     }
+	
+	//add mata kuliah ke arraylist jadwal
+    //i.s. waktu sudah benar
+    public static void add_mk(mataKuliah mk,int h, int j, ruangan r){
+        mk.set_ruang_ref(r);
+		mk.set_slot(h,j);
+    }
+	
+	//add mata kuliah dengan random
+    public static void add_mk_rand(mataKuliah mk, ruangan r){
+        //random hari 1-5
+        int h = rnd.nextInt(5);
+        h+=1;
+        while (!((r.get_hari().isOnDay(h)) && (mk.get_hari().isOnDay(h)))){
+            h = rnd.nextInt(5);
+            h+=1;
+        }
+        //random jam 7 - 17
+        int range = mk.get_selesai().get_jam() - mk.get_sks();
+        range = range-mk.get_mulai().get_jam()+1;
+        int jam = rnd.nextInt(range);
+        jam+=mk.get_mulai().get_jam();
+        while ((jam+mk.get_sks()>r.get_selesai().get_jam())||(jam<r.get_mulai().get_jam())){
+            jam = rnd.nextInt(range);
+            jam+=mk.get_mulai().get_jam();
+        }
+        add_mk(mk,h,jam,r);
+    }
+	
+	//hitung konflik dari jadwal ruangan, harus sort terlebih dulu
+	public static int hitung_konflik(){
+		int konflik = 0;
+		for (int x=0; x<kuliah.size(); x++){
+			int kode = kuliah.get(x).get_slot();
+			int sks = kuliah.get(x).get_sks();
+			
+			for (int y=x+1; y<kuliah.size(); y++){
+				if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
+					if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
+						//hari sama
+						int kodey = kuliah.get(y).get_slot();
+						if (kodey == kode)
+							konflik++;
+						else if (kodey < kode) {
+							if (kodey+kuliah.get(y).get_sks() > kode)
+								konflik++;
+						}
+						else{
+							if (kode+sks > kodey)
+								konflik++;
+						}
+					}
+				}
+			}
+		}
+		return konflik;
+	}
 
     public static void set_file(String x) {
         lokasi_file = x;
@@ -91,7 +141,7 @@ public class file {
         for (int i = 0; i < daySplit.length; i++) {
             hari.set_hari(Integer.parseInt(daySplit[i]), true);
         }
-        kuliah[j_kuliah++] = new mataKuliah(temp[0], temp[1], mulai, selesai, Integer.parseInt(temp[4]), hari);
+        kuliah.add(new mataKuliah(j_kuliah++,temp[0], temp[1], mulai, selesai, Integer.parseInt(temp[4]), hari));
     }
 
     public static void baca_file() {
