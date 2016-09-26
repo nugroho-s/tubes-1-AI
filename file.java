@@ -16,6 +16,7 @@ public class file {
 	public static ruangan[] ruang = new ruangan[10];
 	public static int j_kuliah = 0;
 	public static ArrayList<mataKuliah> kuliah = new ArrayList<mataKuliah>();
+	public static int konflik_now = 0;
 	public static void main(String args[]) {
 		set_file("databaca.txt");
 		baca_file();
@@ -26,7 +27,13 @@ public class file {
             kuliah.get(i).print_jadwal();
         }
 		System.out.println("=======");
-        System.out.println("Konflik = "+hitung_konflik());
+		konflik_now = hitung_konflik();
+        System.out.println("Konflik = "+konflik_now);
+		System.out.println("Selesai Inisialisasi")
+		if (args[args.length-1] == "hill"){
+			hill.set_batas(5*11*j_ruang);
+			hill.start(kuliah);
+		}
 	}
 	
 	public void sort_by_id() {
