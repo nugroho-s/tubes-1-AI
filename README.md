@@ -9,7 +9,6 @@ Untuk memudahkan pengerjaan, usahakan:
 <li>branch master hanya untuk kode yang sudah di tes</li>
 <li>hanya melakukan merge branch setelah kode berhasil</li>
 </ul></li>
-<li></li>
 </ol>
 
 ## Pembagian Tugas
