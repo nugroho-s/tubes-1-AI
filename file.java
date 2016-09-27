@@ -16,6 +16,8 @@ public class file {
 	public static ruangan[] ruang = new ruangan[10];
 	public static int j_kuliah = 0;
 	public static ArrayList<mataKuliah> kuliah = new ArrayList<mataKuliah>();
+	
+	
 	public static void main(String args[]) {
 		set_file("databaca.txt");
 		baca_file();
@@ -27,7 +29,15 @@ public class file {
         }
 		System.out.println("=======");
         System.out.println("Konflik = "+hitung_konflik());
+        System.out.println("=======");
+        System.out.println("=======");
+        System.out.println();
+        System.out.println();
+     
+        pindahmanual();
+        
 	}
+	
 	
 	public void sort_by_id() {
 			Collections.sort(kuliah, new Comparator<mataKuliah>(){
@@ -162,5 +172,66 @@ public class file {
             System.out.println(ex);
         }
     }
+    
+    
+    public static void pindahmanual(){
+		Scanner input = new Scanner(System.in);
+		
+		System.out.print("Apkakah ingin dilakukan pindah manual jadwal (Y/N) : ");
+		String cr = input.nextLine();
+		
+		if (cr.equals("Y")){
+			
+			System.out.println();
+			System.out.println();
+
+			System.out.print("Mata kuliah yang akan dipindahkan : ");
+			String str = input.nextLine();
+			System.out.print("Akan dipindahkan ke ruangan: ");
+			String str2 = input.nextLine();
+			System.out.print("Akan dipindahkan ke hari : ");
+			int hari0 = input.nextInt();
+			System.out.print("Akan dipindahkan ke jam  : ");
+			int waktu0 = input.nextInt();
+			
+			
+			
+			for (int x=0; x<kuliah.size(); x++){
+					if (str.equals(kuliah.get(x).get_nama())){
+						
+						waktu ww = new waktu();
+						ww.set_jam(waktu0);
+						ww.set_menit(0);
+						waktu vv = new waktu();
+						vv.set_jam(waktu0+kuliah.get(x).sks);
+						vv.set_menit(0);
+						
+						kuliah.get(x).mulai = ww;
+						kuliah.get(x).selesai = vv;
+						
+						for (int i = 0; i < 6; i++) {
+							kuliah.get(x).hari.hari[i] = false;
+						}
+						
+						
+						
+						kuliah.get(x).hari.hari[hari0] = true;
+						
+							for (int jj=0; jj<j_ruang; jj++){
+								if (str2.equals(ruang[jj].nama)){
+									kuliah.get(x).ruang=ruang[jj];
+								}
+							}
+						kuliah.get(x).set_slot(hari0,waktu0);	
+						for (int i = 0; i < kuliah.size(); i++) {
+							kuliah.get(i).print_jadwal();
+						}
+					}
+			}
+		}
+	}
+    
+    
 }
+
 
