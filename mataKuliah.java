@@ -5,6 +5,7 @@ public class mataKuliah {
     ruangan ruang;
     waktu mulai;
     waktu selesai;
+    boolean ubah_ruang;
     int sks;
     day hari;
 	int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
@@ -13,6 +14,10 @@ public class mataKuliah {
 		this.id = id;
         nama = n;
         ruang = search_ruang(r);
+        if (r.equals("-"))
+            ubah_ruang = true;
+        else
+            ubah_ruang = false;
         mulai = m;
         selesai = s;
         hari = h;
@@ -44,6 +49,10 @@ public class mataKuliah {
 		System.out.println("Nama: "+get_nama()+"\nRuangan: "+get_ruang().get_nama()
 			+"\nHari: "+get_slot_hari() +"\nJam: "+get_slot_jam()+"\n");
 	}
+    
+    public boolean get_ubah_ruang(){
+        return ubah_ruang;
+    }
 	
 	int get_slot_hari(){
 		return slot_waktu/100;
