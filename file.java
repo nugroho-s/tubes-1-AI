@@ -34,9 +34,19 @@ public class file {
 		if (args.length == 0){
 			return;
 		}
-		if (args[args.length-1] == "hill"){
+		if ((args[args.length-1]).equals("hill")){
+			System.out.println();
 			hill.set_batas(5*11*j_ruang);
 			hill.start(kuliah);
+			System.out.println("Selesai HILL CLIMBING");
+			System.out.println("=======");
+			for (int i = 0; i < kuliah.size(); i++) {
+				kuliah.get(i).print_jadwal();
+			}
+			System.out.println("=======");
+			konflik_now = hitung_konflik();
+			System.out.println("Konflik = "+konflik_now);
+			
 		}
 	}
 	
