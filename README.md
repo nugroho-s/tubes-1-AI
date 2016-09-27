@@ -23,4 +23,5 @@ Untuk memudahkan pengerjaan, usahakan:
 ### Keterangan:
 <ul>
 <li>perpindahan manual dilakukan dengan input teks dahulu</li>
+<li>pewarnaaan cukup melakukan assignment warna dulu</li>
 </ul>
