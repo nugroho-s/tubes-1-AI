@@ -25,3 +25,6 @@ Untuk memudahkan pengerjaan, usahakan:
 <li>perpindahan manual dilakukan dengan input teks dahulu</li>
 <li>pewarnaaan cukup melakukan assignment warna dulu</li>
 </ul>
+
+### Starting point
+Agar lebih mengerti mengenai harus mulai darimana, apa yang harus diutak-atik, dan apa yang dilakukan oleh program utama, dapat dilihat pada file **inisialisasi.md**
