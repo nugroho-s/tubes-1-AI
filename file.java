@@ -18,6 +18,7 @@ public class file {
 	public static ArrayList<mataKuliah> kuliah = new ArrayList<mataKuliah>();
 	public static int konflik_now = 0;
 	
+
 	public static void main(String args[]) {
 		
 		// assign file yang berisi test case
@@ -61,6 +62,7 @@ public class file {
 				konflik_now = hitung_konflik();
 				
 				System.out.println("Konflik = "+konflik_now);
+			
 			} else if ((args[0]).equals("annealing")) {
 				
 				// menggunakan algoritma Simulated Annealing
