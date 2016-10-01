@@ -1,3 +1,5 @@
+package ls;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -19,77 +21,31 @@ public class file {
 	public static int konflik_now = 0;
 	
 	public static void main(String args[]) {
-		
-		// assign file yang berisi test case
-		set_file("testcase.txt");
-		
-		// memulai pembacaan file test case
+		set_file("databaca.txt");
 		baca_file();
-        
-		// menampilkan hasil penjadwalan secara random
-		System.out.println("=======");
+        System.out.println("=======");
         System.out.println("Jadwal");
         inisialisasi_random();
         for (int i = 0; i < kuliah.size(); i++) {
             kuliah.get(i).print_jadwal();
         }
 		System.out.println("=======");
-		
-		// menghitung konflik untuk penjadwalan awal
 		konflik_now = hitung_konflik();
         System.out.println("Konflik = "+konflik_now);
 		System.out.println("Selesai Inisialisasi");
 		
-		// memulai menjalankan algoritma
-		if (args.length>=1) {
-			if ((args[0]).equals("hill")) {
-
-				// menggunakan algoritma Hill Climbing
+		if (args.length>=1){
+			if ((args[0]).equals("hill")){
 				System.out.println();
-				
 				hill.set_batas(5*11*j_ruang);
 				hill.start(kuliah);
-				
 				System.out.println("Selesai HILL CLIMBING");
 				System.out.println("=======");
 				for (int i = 0; i < kuliah.size(); i++) {
 					kuliah.get(i).print_jadwal();
 				}
 				System.out.println("=======");
-				
-				// menghitung konflik akhir
 				konflik_now = hitung_konflik();
-				
-				System.out.println("Konflik = "+konflik_now);
-			} else if ((args[0]).equals("annealing")) {
-				
-				// menggunakan algoritma Simulated Annealing
-				System.out.println();
-				
-				annealing.start(kuliah);
-				
-				// menghitung konflik akhir
-				konflik_now = hitung_konflik();
-				
-				// menggunakan algoritma Hill Climbing untuk memastikan bahwa solusi didapatkan
-				if (konflik_now != 0) {
-					
-					System.out.println("Memulai hill climbing setelah annealing");
-					
-					hill.set_batas(5*11*j_ruang);
-					hill.start(kuliah);
-					
-					// menghitung konflik akhir
-					konflik_now = hitung_konflik();
-				}
-				
-				System.out.println("Selesai SIMULATED ANNEALING");
-				System.out.println("=======");
-				for (int i = 0; i < kuliah.size(); i++) {
-					kuliah.get(i).print_jadwal();
-				}
-				System.out.println("=======");
-				
 				System.out.println("Konflik = "+konflik_now);
 			}
 		}
@@ -127,27 +83,6 @@ public class file {
         }
     }
 	
-	public static void inisialisasi_random(ArrayList<mataKuliah> k){
-        for (int i = 0; i < j_kuliah; i++) {
-            ruangan r;
-            if (k.get(i).get_ruang()!=null){
-                //semua yg memiliki kelas harus dimasukkan
-                r = k.get(i).get_ruang();
-                add_mk_rand(k.get(i),r);
-            }
-            else{
-                //harus dicek apakah kelas bisa menampung mata kuliah
-                do{
-                    int xi = rnd.nextInt(j_ruang);
-                    r = ruang[xi];
-                } while ((r.get_mulai().get_jam()>k.get(i).get_selesai().get_jam())||
-                (r.get_selesai().get_jam()<k.get(i).get_mulai().get_jam()+k.get(i).get_sks())||
-                (!(day.is_intersect(r.get_hari(),k.get(i).get_hari()))));
-                add_mk_rand(k.get(i),r);
-            }
-        }
-    }
-	
 	//add mata kuliah ke arraylist jadwal
     //i.s. waktu sudah benar
     public static void add_mk(mataKuliah mk,int h, int j, ruangan r){
@@ -176,6 +111,7 @@ public class file {
         add_mk(mk,h,jam,r);
     }
 	
+	//hitung konflik dari jadwal ruangan, harus sort terlebih dulu
 	public static int hitung_konflik(){
 		int konflik = 0;
 		for (int x=0; x<kuliah.size(); x++){
@@ -191,34 +127,6 @@ public class file {
 							konflik++;
 						else if (kodey < kode) {
 							if (kodey+kuliah.get(y).get_sks() > kode)
-								konflik++;
-						}
-						else{
-							if (kode+sks > kodey)
-								konflik++;
-						}
-					}
-				}
-			}
-		}
-		return konflik;
-	}
-	
-	public static int hitung_konflik(ArrayList<mataKuliah> k){
-		int konflik = 0;
-		for (int x=0; x<k.size(); x++){
-			int kode = k.get(x).get_slot();
-			int sks = k.get(x).get_sks();
-			
-			for (int y=x+1; y<k.size(); y++){
-				if (k.get(x).get_ruang() == k.get(y).get_ruang()){
-					if (Math.abs(kode-k.get(y).get_slot()) < 50){
-						//hari sama
-						int kodey = k.get(y).get_slot();
-						if (kodey == kode)
-							konflik++;
-						else if (kodey < kode) {
-							if (kodey+k.get(y).get_sks() > kode)
 								konflik++;
 						}
 						else{
@@ -261,6 +169,9 @@ public class file {
     }
 
     public static void baca_file() {
+		j_kuliah = 0;
+		kuliah.clear();
+		j_ruang = 0;
         try {
             FileReader fr = new FileReader(lokasi_file);
             BufferedReader br = new BufferedReader(fr);

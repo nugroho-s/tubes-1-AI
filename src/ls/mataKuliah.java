@@ -1,3 +1,5 @@
+package ls;
+
 public class mataKuliah {
 
 	int id;
@@ -10,6 +12,11 @@ public class mataKuliah {
     day hari;
 	public int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
 
+	// table model attributes
+	boolean is_allocated_on_table = false;
+	int row;
+	int column;
+	
     public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
 		this.id = id;
         nama = n;
@@ -49,16 +56,48 @@ public class mataKuliah {
 		System.out.println("Nama: "+get_nama()+"\nRuangan: "+get_ruang().get_nama()
 			+"\nHari: "+get_slot_hari() +"\nJam: "+get_slot_jam()+"\n");
 	}
+	
+	public String jadwal_html(){
+		return ("Nama: "+get_nama()+"<br/>\nRuangan: "+get_ruang().get_nama()
+			+"<br/>\nHari: "+get_slot_hari() +"<br/>\nJam: "+get_slot_jam()+"<br/>\n");
+	}
     
+	
+	
+	// table model GETTER and SETTER
+	public boolean get_is_allocated() {
+		return is_allocated_on_table;
+	}
+	
+	public void set_is_allocated(boolean is_allocated) {
+		is_allocated_on_table = is_allocated;
+	}
+	
+	public int get_row() {
+		return row;
+	}
+	
+	public void set_row(int val) {
+		row = val;
+	}
+	
+	public int get_column() {
+		return column;
+	}
+	
+	public void set_column(int val) {
+		column = val;
+	}
+	
     public boolean get_ubah_ruang(){
         return ubah_ruang;
     }
 	
-	int get_slot_hari(){
+	public int get_slot_hari(){
 		return slot_waktu/100;
 	}
 	
-	int get_slot_jam(){
+	public int get_slot_jam(){
 		return slot_waktu%100;
 	}
 	
@@ -121,4 +160,5 @@ public class mataKuliah {
     public void set_hari(day h) {
         hari = h;
     }
+	
 }

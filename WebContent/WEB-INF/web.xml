@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+  <display-name>TubesAI01</display-name>
+  <context-param>
+    <description>Location to store uploaded file</description>
+    <param-name>file-upload</param-name>
+    <param-value>
+         C:\xampp\tomcat\webapps\TubesAI01\
+     </param-value>
+  </context-param>
+  <servlet>
+    <servlet-name>FormServlet</servlet-name>
+    <servlet-class>servlet.FormServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>UploadServlet</servlet-name>
+    <servlet-class>servlet.UploadServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SolveServlet</servlet-name>
+    <servlet-class>servlet.SolveServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>TableServlet</servlet-name>
+    <servlet-class>servlet.TableServlet</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>FormServlet</servlet-name>
+    <url-pattern>/formservlet</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UploadServlet</servlet-name>
+    <url-pattern>/upload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SolveServlet</servlet-name>
+    <url-pattern>/solve</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>TableServlet</servlet-name>
+    <url-pattern>/table</url-pattern>
+  </servlet-mapping>
+</web-app>
