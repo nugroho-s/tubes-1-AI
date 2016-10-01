@@ -1,3 +1,5 @@
+package ls;
+
 public class waktu {
 
     int jam;

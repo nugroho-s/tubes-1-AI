@@ -1,4 +1,6 @@
-class day {
+package ls;
+
+public class day {
 
     boolean hari[] = new boolean[6]; //hari dienumerasi sebagai indeks 1-5
 

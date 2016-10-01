@@ -1,3 +1,5 @@
+package ls;
+
 public class mataKuliah {
 
 	int id;
@@ -48,6 +50,11 @@ public class mataKuliah {
 	public void print_jadwal(){
 		System.out.println("Nama: "+get_nama()+"\nRuangan: "+get_ruang().get_nama()
 			+"\nHari: "+get_slot_hari() +"\nJam: "+get_slot_jam()+"\n");
+	}
+	
+	public String jadwal_html(){
+		return ("Nama: "+get_nama()+"<br/>\nRuangan: "+get_ruang().get_nama()
+			+"<br/>\nHari: "+get_slot_hari() +"<br/>\nJam: "+get_slot_jam()+"<br/>\n");
 	}
     
     public boolean get_ubah_ruang(){

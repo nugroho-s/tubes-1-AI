@@ -1,11 +1,17 @@
+package ls;
+
 import java.util.Random;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Comparator;
 import java.util.Collections;
 
+<<<<<<< HEAD:hill.java
 class hill {
 	
+=======
+public class hill{
+>>>>>>> upstream/jsp:WEB-INF/classes/ls/hill.java
 	public static int batas;
 	private static Random rnd = new Random();
 	
