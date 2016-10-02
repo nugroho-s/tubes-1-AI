@@ -1,16 +1,15 @@
-public class mataKuliah {
+public class mataKuliah{
 
 	int id;
     String nama;
     ruangan ruang;
-    boolean ubah_ruang;
     waktu mulai;
     waktu selesai;
+    boolean ubah_ruang;
     int sks;
     day hari;
 	public int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
-	int warna;
-	
+
     public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
 		this.id = id;
         nama = n;
@@ -25,6 +24,11 @@ public class mataKuliah {
         sks = sk;
     }
 
+	public mataKuliah() {
+		id = 0;
+        nama = "";
+    }
+    
     public String toString() {
         if (ruang == null){
             return ("Nama: " + get_nama() + "\nRuangan: -" + "\nWaktu mulai: " + get_mulai()
@@ -122,4 +126,18 @@ public class mataKuliah {
     public void set_hari(day h) {
         hari = h;
     }
+    @Override
+    public mataKuliah clone() {
+		mataKuliah temp = new mataKuliah();
+		temp.id = id;
+        temp.nama = nama;
+        temp.ruang = ruang;
+        temp.ubah_ruang = ubah_ruang;
+        temp.mulai = mulai;
+        temp.selesai = selesai;
+        temp.hari = hari;
+        temp.sks = sks;
+        temp.slot_waktu = slot_waktu;
+		return temp;
+	}
 }
