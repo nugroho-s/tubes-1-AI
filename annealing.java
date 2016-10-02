@@ -99,13 +99,13 @@ public class annealing {
 					// menghitung nilai peluang (acceptance probability)
 					peluang = hitung_peluang(file.konflik_now, konflik, T);
 				
-					if (peluang > Math.random()) {
-						// jika peluang lebih besar dari angka random (0 <= random < 1), maka solusi diterima
-						file.konflik_now = konflik;
-					} else {
-						kuliah.get(i).set_ruang_ref(r_old);
-						kuliah.get(i).slot_waktu = slot_old;
-					}
+						if (peluang > Math.random()) {
+							// jika peluang lebih besar dari angka random (0 <= random < 1), maka solusi diterima
+							file.konflik_now = konflik;
+						} else {
+							kuliah.get(i).set_ruang_ref(r_old);
+							kuliah.get(i).slot_waktu = slot_old;
+						}
 				
 				}
 				

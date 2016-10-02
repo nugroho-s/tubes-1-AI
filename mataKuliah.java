@@ -3,13 +3,14 @@ public class mataKuliah {
 	int id;
     String nama;
     ruangan ruang;
+    boolean ubah_ruang;
     waktu mulai;
     waktu selesai;
-    boolean ubah_ruang;
     int sks;
     day hari;
 	public int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
-
+	int warna;
+	
     public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
 		this.id = id;
         nama = n;
