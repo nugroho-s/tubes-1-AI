@@ -132,6 +132,27 @@ public class file {
         }
     }
 	
+	public static void inisialisasi_random(ArrayList<mataKuliah> k){
+        for (int i = 0; i < j_kuliah; i++) {
+            ruangan r;
+            if (k.get(i).get_ruang()!=null){
+                //semua yg memiliki kelas harus dimasukkan
+                r = k.get(i).get_ruang();
+                add_mk_rand(k.get(i),r);
+            }
+            else{
+                //harus dicek apakah kelas bisa menampung mata kuliah
+                do{
+                    int xi = rnd.nextInt(j_ruang);
+                    r = ruang[xi];
+                } while ((r.get_mulai().get_jam()>k.get(i).get_selesai().get_jam())||
+                (r.get_selesai().get_jam()<k.get(i).get_mulai().get_jam()+k.get(i).get_sks())||
+                (!(day.is_intersect(r.get_hari(),k.get(i).get_hari()))));
+                add_mk_rand(k.get(i),r);
+            }
+        }
+    }
+	
 	//add mata kuliah ke arraylist jadwal
     //i.s. waktu sudah benar
     public static void add_mk(mataKuliah mk,int h, int j, ruangan r){
@@ -160,7 +181,6 @@ public class file {
         add_mk(mk,h,jam,r);
     }
 	
-	//hitung konflik dari jadwal ruangan, harus sort terlebih dulu
 	public static int hitung_konflik(){
 		int konflik = 0;
 		for (int x=0; x<kuliah.size(); x++){
@@ -176,6 +196,34 @@ public class file {
 							konflik++;
 						else if (kodey < kode) {
 							if (kodey+kuliah.get(y).get_sks() > kode)
+								konflik++;
+						}
+						else{
+							if (kode+sks > kodey)
+								konflik++;
+						}
+					}
+				}
+			}
+		}
+		return konflik;
+	}
+	
+	public static int hitung_konflik(ArrayList<mataKuliah> k){
+		int konflik = 0;
+		for (int x=0; x<k.size(); x++){
+			int kode = k.get(x).get_slot();
+			int sks = k.get(x).get_sks();
+			
+			for (int y=x+1; y<k.size(); y++){
+				if (k.get(x).get_ruang() == k.get(y).get_ruang()){
+					if (Math.abs(kode-k.get(y).get_slot()) < 50){
+						//hari sama
+						int kodey = k.get(y).get_slot();
+						if (kodey == kode)
+							konflik++;
+						else if (kodey < kode) {
+							if (kodey+k.get(y).get_sks() > kode)
 								konflik++;
 						}
 						else{
