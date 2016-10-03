@@ -20,6 +20,8 @@ public class hill{
 		int slot_old;
 		int konflik;
 		
+		file.konflik_now = file.hitung_konflik();
+		
 		while ((file.konflik_now != 0) || (sama < batas)){
 			if (kuliah.get(i).get_ubah_ruang()){
 				//ruang dapat diubah
