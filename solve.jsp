@@ -49,6 +49,19 @@
 				border: 1px solid black;
 				border-collapse: collapse;
 			}
+			#wrap {
+				float: right;
+			   width:600px;
+			   margin-right:0 auto;
+			}
+			#left_col {
+			   float:left;
+			   width:300px;
+			}
+			#right_col {
+			   float:right;
+			   width:300px;
+			}
 		</style>
 	</head>
 	<body>
@@ -92,8 +105,6 @@
 				
 				//menghitung konflik saat ini
 				konflik_now = file.hitung_konflik();
-				out.println("Konflik saat ini= "+konflik_now+"<br/>");
-				out.println("<br><br><br>");
 			}
 			else if(algorithm.equals("2")){
 				out.println("<b>Algoritma: Simulated Annealing</b><br/>");
@@ -106,8 +117,6 @@
 				
 				//menghitung konflik saat ini
 				konflik_now = file.hitung_konflik();
-				out.println("Konflik saat ini= "+konflik_now+"<br/>");
-				out.println("<br><br><br>");
 			}
 			else if(algorithm.equals("3")){
 				out.println("<b>Algoritma: Genetic Algorithm</b><br/>");
@@ -116,8 +125,6 @@
 				
 				//menghitung konflik saat ini
 				konflik_now = g.get_konflik_now();
-				out.println("Konflik saat ini= "+konflik_now+"<br/>");
-				out.println("<br><br>");
 			}
 			
 		%>
@@ -192,14 +199,22 @@
 		%>
 		</table>
 		<br/>
-		<h3>persentase ruang:</h3>
-		<br/>
-		<%
-			file.hitung_persentase();
-			for (int xx=0;xx<file.j_ruang;xx++){
-				out.println(file.ruang[xx].get_nama() + " = " +file.ruang[xx].persentase+"</br>");
-			}
-		%>
+		<div id="wrap">
+			<div id="left_col">
+			<h3>persentase ruang:</h3>
+				<br/>
+				<%
+					file.hitung_persentase();
+					for (int xx=0;xx<file.j_ruang;xx++){
+						out.println(file.ruang[xx].get_nama() + " = " +file.ruang[xx].persentase+"</br>");
+					}
+				%>
+			</div>
+			<div id="right_col">
+				<h3>konflik:</h3>
+				konflik sekarang <%=konflik_now%><br/>
+			</div>
+		</div>
 		<div class="ads">
 		<div>
 			<%
