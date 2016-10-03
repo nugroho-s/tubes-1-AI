@@ -383,7 +383,71 @@ public class file {
 		}
 	}
     
+    // Inisialisasi warna
+    public static void setwarna(){
+		for (int i=0; i<kuliah.size(); i++){
+			kuliah.get(i).warna=0;	// 0 berarti tidak berwarna
+		}
+	}
     
+    public static boolean warnasama(mataKuliah mk1){
+		
+		int i = 0;
+		boolean bool1=false;
+		
+		while((i<kuliah.size()) && (!bool1)){
+			if ((mk1!=kuliah.get(i)) && (jadwalbersinggungan(mk1,kuliah.get(i))) && (mk1.warna==kuliah.get(i).warna) ){
+				bool1=true;
+			}
+			i++;
+		}
+		
+	
+		
+		return bool1;
+	}
+    
+    public static boolean jadwalbersinggungan(mataKuliah mk1,mataKuliah mk2){
+		boolean ada;
+		
+		ada=false;
+		
+		int i = mk1.slot_waktu;
+		int mm = mk1.slot_waktu;
+		int j = mk2.slot_waktu;
+		int nn = mk2.slot_waktu;
+		
+		
+		while ((i<=mm+mk1.sks) && !(ada)){
+			while ((j<=nn+mk2.sks) && !(ada)){
+				if((i+1==j) || (i==j+1) || (i+100==j) || (i==100+j) || (i==j)){
+					//System.out.println("Ada sama");
+					ada = true;
+				}
+				j++;
+			}
+			i++;
+		}
+		
+		
+		return((mk1.ruang==mk2.ruang) && (ada));
+	}
+	
+	public static void pewarnaanjadwal(){
+		
+		setwarna();
+		for (int i=0; i<kuliah.size(); i++){
+			kuliah.get(i).warna=1;
+			while (warnasama(kuliah.get(i))){
+				kuliah.get(i).warna++;
+			}
+		}
+		
+		for (int i=0; i<kuliah.size(); i++){
+			System.out.println("Warna kuliah " + kuliah.get(i).nama + " adalah " + kuliah.get(i).warna);
+		}
+		
+	}
 }
 
 

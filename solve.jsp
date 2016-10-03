@@ -124,6 +124,7 @@
 		<% //print jadwal %>
 		<table style="width:100%">
 		<%
+			file.pewarnaanjadwal();
 			int i, j;
 			int totaljdwlbentrok=0;
 			for (i = 6; i <= 17; i++){
@@ -162,8 +163,18 @@
 											}
 										}
 										if(!bentrok){
+											String warna = "blue";
+											if (file.kuliah.get(k).warna == 1){
+												warna = "black";
+											} else if (file.kuliah.get(k).warna == 2){
+												warna = "orange";
+											} else if (file.kuliah.get(k).warna == 3){
+												warna = "green";
+											} else if (file.kuliah.get(k).warna == 4){
+												warna = "cyan";
+											}
 											arrayRuangTerpakai.add(new String(file.kuliah.get(k).get_ruang().get_nama()));
-											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</a>");
+											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style='color:"+warna+"'>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
 										}
 										else{
 											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");

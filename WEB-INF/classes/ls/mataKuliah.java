@@ -10,6 +10,7 @@ public class mataKuliah{
     boolean ubah_ruang;
     int sks;
     day hari;
+	public int warna;
 	public int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
 
     public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
