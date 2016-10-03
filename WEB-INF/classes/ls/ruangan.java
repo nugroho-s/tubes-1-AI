@@ -12,6 +12,7 @@ public class ruangan {
     waktu mulai;
     waktu selesai;
     day hari;
+	public double persentase;
 	//ArrayList<slot> jadwal = new ArrayList<slot>();
     private static Random rnd = new Random();
 
@@ -22,6 +23,18 @@ public class ruangan {
         hari = h;
     }
 
+	public void hitung_persentase(){
+		double slot_tersedia = (double)(get_selesai().get_jam() - get_mulai().get_jam())*5;
+		double slot_terpakai = 0.0;
+		for (int i=0;i<file.kuliah.size();i++){
+			if (file.kuliah.get(i).get_ruang() == this){
+				slot_terpakai+=file.kuliah.get(i).get_sks();
+			}
+		}
+		persentase = (double)(slot_terpakai/slot_tersedia);
+		persentase *= 100;
+	}
+	
     public String toString() {
         return ("Nama: " + get_nama() + "\n" + "Waktu mulai: " + get_mulai() + "\n"
                 + "Waktu selesai: " + get_selesai() + "\nhari: " + get_hari().toString());

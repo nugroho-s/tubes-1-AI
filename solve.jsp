@@ -135,7 +135,7 @@
 				else{
 					for(j = 0; j <= 5; j++){
 						if(j == 0){
-							out.print("<td><b>"+(7+i-1)+".00</b></td>");
+							out.print("<td><b>"+(i)+".00</b></td>");
 						}
 						else{
 							out.print("<td>");
@@ -175,6 +175,14 @@
 			}
 		%>
 		</table>
+		<div>persentase ruang:</div>
+		<br/>
+		<%
+			file.hitung_persentase();
+			for (int xx=0;xx<file.j_ruang;xx++){
+				out.println(file.ruang[xx].get_nama() + " = " +file.ruang[xx].persentase+"</br>");
+			}
+		%>
 		<div class="ads">
 			<%
 				out.println("<br><h2 style=\"text-align:center\">Mencoba algoritma yang lain?</h2><br>");

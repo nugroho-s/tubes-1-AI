@@ -109,6 +109,12 @@ public class file {
 		//pindahmanual();
 	}
 	
+	public static void hitung_persentase(){
+		for (int i=0;i<j_ruang;i++){
+			ruang[i].hitung_persentase();
+		}
+	}
+	
 	
 	public void sort_by_id() {
 			Collections.sort(kuliah, new Comparator<mataKuliah>(){
