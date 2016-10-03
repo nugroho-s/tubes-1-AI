@@ -38,7 +38,7 @@
 			.active {
 				background-color: rgb(11, 158, 255);
 			}
-			div.ads {
+			div {
 				background-color: lightgrey;
 				width: 300px;
 				border: 25px solid green;
@@ -48,19 +48,6 @@
 			table, th, td {
 				border: 1px solid black;
 				border-collapse: collapse;
-			}
-			#wrap {
-				float: right;
-			   width:600px;
-			   margin-right:0 auto;
-			}
-			#left_col {
-			   float:left;
-			   width:300px;
-			}
-			#right_col {
-			   float:right;
-			   width:300px;
 			}
 		</style>
 	</head>
@@ -76,26 +63,24 @@
 		<%
 			ServletContext context = pageContext.getServletContext();
 			String file_name = request.getParameter("name");
-			String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
 			String algorithm = request.getParameter("algo");
+			int konflik_now = 0;
+			if(!algorithm.equals("0")){
+				String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
 			
-			//membaca file
-			file.set_file(full_path);
-			file.baca_file();
-			
-			//inisialisasi random
-			out.println("Setelah diinisialisasi secara random<br>");
-			file.inisialisasi_random();
-			/*for (int i = 0; i < file.kuliah.size(); i++) {
-				out.println(file.kuliah.get(i).jadwal_html());
-				out.println("<br/>");
-			}*/
-			
-			
-			//menghitung konflik saat ini
-			int konflik_now = file.hitung_konflik();
-			out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
-			out.println("<br><br>");
+				//membaca file
+				file.set_file(full_path);
+				file.baca_file();
+				
+				//inisialisasi random
+				out.println("Setelah diinisialisasi secara random<br>");
+				file.inisialisasi_random();			
+				
+				//menghitung konflik saat ini
+				konflik_now = file.hitung_konflik();
+				out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
+				out.println("<br><br>");
+			}
 			
 			//Algoritma
 			if(algorithm.equals("1")){
@@ -126,12 +111,18 @@
 				//menghitung konflik saat ini
 				konflik_now = g.get_konflik_now();
 			}
+			else{
+				konflik_now=file.hitung_konflik();
+			}
+			
+			out.println("Konflik saat ini= "+konflik_now+"<br/>");
+			out.println("<br><br><br>");
 			
 		%>
-		<% //print jadwal %>
+		<% //print jadwal 
+		%>
 		<table style="width:100%">
-		<%
-			file.pewarnaanjadwal();
+			<%
 			int i, j;
 			int totaljdwlbentrok=0;
 			for (i = 6; i <= 17; i++){
@@ -142,7 +133,6 @@
 				else{
 					for(j = 0; j <= 5; j++){
 						if(j == 0){
-							//out.print("<td><b>"+(i)+".00</b></td>");
 							if(i<10){
 								out.print("<td><b>0"+i+".00</b></td>");
 							}
@@ -170,18 +160,8 @@
 											}
 										}
 										if(!bentrok){
-											String warna = "blue";
-											if (file.kuliah.get(k).warna == 1){
-												warna = "black";
-											} else if (file.kuliah.get(k).warna == 2){
-												warna = "orange";
-											} else if (file.kuliah.get(k).warna == 3){
-												warna = "green";
-											} else if (file.kuliah.get(k).warna == 4){
-												warna = "cyan";
-											}
 											arrayRuangTerpakai.add(new String(file.kuliah.get(k).get_ruang().get_nama()));
-											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style='color:"+warna+"'>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
+											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
 										}
 										else{
 											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
@@ -198,24 +178,6 @@
 			}
 		%>
 		</table>
-		<br/>
-		<div id="wrap">
-			<div id="left_col">
-			<h3>persentase ruang:</h3>
-				<br/>
-				<%
-					file.hitung_persentase();
-					for (int xx=0;xx<file.j_ruang;xx++){
-						out.println(file.ruang[xx].get_nama() + " = " +file.ruang[xx].persentase+"</br>");
-					}
-				%>
-			</div>
-			<div id="right_col">
-				<h3>konflik:</h3>
-				konflik sekarang <%=konflik_now%><br/>
-			</div>
-		</div>
-		<div class="ads">
 		<div>
 			<%
 				out.println("<br><h2 style=\"text-align:center\">Mencoba algoritma yang lain?</h2><br>");

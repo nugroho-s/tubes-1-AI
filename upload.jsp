@@ -90,6 +90,7 @@
 						fileName.substring(fileName.lastIndexOf("\\")+1)) ;
 					}
 					fi.write( file ) ;
+					out.println("<h1><b>Pemilihan Algoritma</b></h1><br>");
 					out.println("Nama berkas yang diunggah: " + filePath + fileName + "<br>");
 					out.println("<h2>Algoritma yang digunakan:</h2><br>");
 					out.println("<button onclick=\"location.href = 'solve.jsp?name="+fileName+"&algo=1'\"; id=\"myButton\" class=\"float-left submit-button\" style=\"background-color: rgb(11, 158, 255); border: none; color: white; padding: 16px 32px; text-decoration: none; margin: 4px 2px;cursor: pointer;\">Hill-Climbing</button>");
