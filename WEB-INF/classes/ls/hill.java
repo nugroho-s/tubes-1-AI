@@ -13,7 +13,6 @@ public class hill{
 		batas = b;
 	}
 	public static void start(ArrayList<mataKuliah> kuliah){
-		file.konflik_now = file.hitung_konflik();
 		int i = 0;
 		int sama = 0;
 		ruangan r;

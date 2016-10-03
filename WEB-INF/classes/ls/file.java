@@ -23,7 +23,7 @@ public class file {
 	public static void main(String args[]) {
 		
 		// assign file yang berisi test case
-		set_file("databaca.txt");
+		set_file("testcase.txt");
 		
 		// memulai pembacaan file test case
 		baca_file();
@@ -218,25 +218,21 @@ public class file {
 		for (int x=0; x<kuliah.size(); x++){
 			int kode = kuliah.get(x).get_slot();
 			int sks = kuliah.get(x).get_sks();
-			kode--;
-			for (int i=0;i<sks;i++)
-			{
-				kode++; 
-				for (int y=x+1; y<kuliah.size(); y++){
-					if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
-						if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
-							//hari sama
-							int kodey = kuliah.get(y).get_slot();
-							if (kodey == kode)
+			
+			for (int y=x+1; y<kuliah.size(); y++){
+				if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
+					if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
+						//hari sama
+						int kodey = kuliah.get(y).get_slot();
+						if (kodey == kode)
+							konflik++;
+						else if (kodey < kode) {
+							if (kodey+kuliah.get(y).get_sks() > kode)
 								konflik++;
-							else if (kodey < kode) {
-								if (kodey+kuliah.get(y).get_sks() > kode)
-									konflik++;
-							}
-							/*else{
-								if (kode+sks > kodey)
-									konflik++;
-							}*/
+						}
+						else{
+							if (kode+sks > kodey)
+								konflik++;
 						}
 					}
 				}

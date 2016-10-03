@@ -7,7 +7,6 @@
 <%@ page import="ls.annealing"%>
 <%@ page import="ls.genetic"%>
 <%@ page import="java.util.ArrayList" %>
-
 <html>
 	<head>
 		<title> Penjadwalan </title>
@@ -39,7 +38,7 @@
 			.active {
 				background-color: rgb(11, 158, 255);
 			}
-			div.ads {
+			div {
 				background-color: lightgrey;
 				width: 300px;
 				border: 25px solid green;
@@ -135,7 +134,12 @@
 				else{
 					for(j = 0; j <= 5; j++){
 						if(j == 0){
-							out.print("<td><b>"+(7+i-1)+".00</b></td>");
+							if(i<10){
+								out.print("<td><b>0"+i+".00</b></td>");
+							}
+							else{
+								out.print("<td><b>"+i+".00</b></td>");
+							}
 						}
 						else{
 							out.print("<td>");
@@ -158,10 +162,10 @@
 										}
 										if(!bentrok){
 											arrayRuangTerpakai.add(new String(file.kuliah.get(k).get_ruang().get_nama()));
-											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</a>");
+											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</a>");
 										}
 										else{
-											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
+											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
 										}
 										found = true;
 									}
@@ -175,7 +179,7 @@
 			}
 		%>
 		</table>
-		<div class="ads">
+		<div>
 			<%
 				out.println("<br><h2 style=\"text-align:center\">Mencoba algoritma yang lain?</h2><br>");
 				out.println("<button onclick=\"location.href = 'solve.jsp?name="+file_name+"&algo=1'\"; id=\"myButton\" class=\"float-left submit-button\" style=\"background-color: green; border: none; color: white; padding: 16px 56px; text-decoration: none; margin: 8px 50px;cursor: pointer;\">Hill-Climbing</button><br/>");
