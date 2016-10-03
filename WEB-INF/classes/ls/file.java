@@ -430,17 +430,16 @@ public class file {
 		}
 		
 		
-		return((mk1.ruang==mk2.ruang) && (ada));
+		return (ada);
 	}
 	
 	public static void pewarnaanjadwal(){
 		
 		setwarna();
+		int a=1;
 		for (int i=0; i<kuliah.size(); i++){
-			kuliah.get(i).warna=1;
-			while (warnasama(kuliah.get(i))){
-				kuliah.get(i).warna++;
-			}
+			kuliah.get(i).warna=a;
+				a++;
 		}
 		
 		for (int i=0; i<kuliah.size(); i++){

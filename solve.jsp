@@ -170,16 +170,45 @@
 											}
 										}
 										if(!bentrok){
-											String warna = "blue";
+											String warna = "black";
 											if (file.kuliah.get(k).warna == 1){
-												warna = "black";
+												warna = "blue";
 											} else if (file.kuliah.get(k).warna == 2){
 												warna = "orange";
 											} else if (file.kuliah.get(k).warna == 3){
-												warna = "green";
+												warna = "#5F9EAD";
 											} else if (file.kuliah.get(k).warna == 4){
-												warna = "cyan";
-											}
+												warna = "#03FF0C";
+											} else if (file.kuliah.get(k).warna == 5){
+												warna = "#000030";
+											} else if (file.kuliah.get(k).warna == 6){
+												warna = "#7FFFD4";
+											} else if (file.kuliah.get(k).warna == 7){
+												warna = "#8A2BE2";
+											} else if (file.kuliah.get(k).warna == 8){
+												warna = "#884433";
+											} else if (file.kuliah.get(k).warna == 9){
+												warna = "#F2F200";
+											} else if (file.kuliah.get(k).warna == 10){
+												warna = "#907084";
+											} else if (file.kuliah.get(k).warna == 11){
+												warna = "#FF33DD";
+											} else if (file.kuliah.get(k).warna == 12){
+												warna = "#CCFFDD";
+											} else if (file.kuliah.get(k).warna == 13){
+												warna = "#CCE6FF";
+											} else if (file.kuliah.get(k).warna == 14){
+												warna = "#1A8CFF";
+											} else if (file.kuliah.get(k).warna == 15){
+												warna = "#80BFFF";
+											} else if (file.kuliah.get(k).warna == 16){
+												warna = "#999900";
+											} else if (file.kuliah.get(k).warna == 17){
+												warna = "#999966";
+											} else if (file.kuliah.get(k).warna == 18){
+												warna = "#444444";
+											} 
+											
 											arrayRuangTerpakai.add(new String(file.kuliah.get(k).get_ruang().get_nama()));
 											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style='color:"+warna+"'>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
 										}
