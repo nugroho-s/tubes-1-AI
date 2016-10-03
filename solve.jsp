@@ -80,20 +80,23 @@
 			String algorithm = request.getParameter("algo");
 			
 			//membaca file
-			file.set_file(full_path);
-			file.baca_file();
-			
-			//inisialisasi random
-			out.println("Setelah diinisialisasi secara random<br>");
-			file.inisialisasi_random();
-			/*for (int i = 0; i < file.kuliah.size(); i++) {
-				out.println(file.kuliah.get(i).jadwal_html());
-				out.println("<br/>");
-			}*/
-			
-			
-			//menghitung konflik saat ini
 			int konflik_now = file.hitung_konflik();
+			if (!(algorithm.equals("0"))){
+				file.set_file(full_path);
+				file.baca_file();
+				
+				//inisialisasi random
+				out.println("Setelah diinisialisasi secara random<br>");
+				file.inisialisasi_random();
+				/*for (int i = 0; i < file.kuliah.size(); i++) {
+					out.println(file.kuliah.get(i).jadwal_html());
+					out.println("<br/>");
+				}*/
+				
+				
+				//menghitung konflik saat ini
+				konflik_now = file.hitung_konflik();
+			}
 			out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
 			out.println("<br><br>");
 			
