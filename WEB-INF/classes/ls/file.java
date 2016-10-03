@@ -1,3 +1,5 @@
+package ls;
+
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -21,7 +23,7 @@ public class file {
 	public static void main(String args[]) {
 		
 		// assign file yang berisi test case
-		set_file("testcase.txt");
+		set_file("databaca.txt");
 		
 		// memulai pembacaan file test case
 		baca_file();
@@ -216,21 +218,25 @@ public class file {
 		for (int x=0; x<kuliah.size(); x++){
 			int kode = kuliah.get(x).get_slot();
 			int sks = kuliah.get(x).get_sks();
-			
-			for (int y=x+1; y<kuliah.size(); y++){
-				if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
-					if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
-						//hari sama
-						int kodey = kuliah.get(y).get_slot();
-						if (kodey == kode)
-							konflik++;
-						else if (kodey < kode) {
-							if (kodey+kuliah.get(y).get_sks() > kode)
+			kode--;
+			for (int i=0;i<sks;i++)
+			{
+				kode++; 
+				for (int y=x+1; y<kuliah.size(); y++){
+					if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
+						if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
+							//hari sama
+							int kodey = kuliah.get(y).get_slot();
+							if (kodey == kode)
 								konflik++;
-						}
-						else{
-							if (kode+sks > kodey)
-								konflik++;
+							else if (kodey < kode) {
+								if (kodey+kuliah.get(y).get_sks() > kode)
+									konflik++;
+							}
+							/*else{
+								if (kode+sks > kodey)
+									konflik++;
+							}*/
 						}
 					}
 				}
@@ -296,6 +302,9 @@ public class file {
     }
 
     public static void baca_file() {
+		j_kuliah = 0;
+		j_ruang = 0;
+		kuliah.clear();
         try {
             FileReader fr = new FileReader(lokasi_file);
             BufferedReader br = new BufferedReader(fr);
@@ -358,11 +367,11 @@ public class file {
 						
 						kuliah.get(x).hari.hari[hari0] = true;
 						
-							for (int jj=0; jj<j_ruang; jj++){
-								if (str2.equals(ruang[jj].nama)){
-									kuliah.get(x).ruang=ruang[jj];
-								}
+						for (int jj=0; jj<j_ruang; jj++){
+							if (str2.equals(ruang[jj].nama)){
+								kuliah.get(x).ruang=ruang[jj];
 							}
+						}
 						kuliah.get(x).set_slot(hari0,waktu0);	
 						for (int i = 0; i < kuliah.size(); i++) {
 							kuliah.get(i).print_jadwal();
