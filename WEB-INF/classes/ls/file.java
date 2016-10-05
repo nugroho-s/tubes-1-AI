@@ -440,12 +440,7 @@ public class file {
 		for (int i=0; i<kuliah.size(); i++){
 			kuliah.get(i).warna=a;
 				a++;
-		}
-		
-		for (int i=0; i<kuliah.size(); i++){
-			System.out.println("Warna kuliah " + kuliah.get(i).nama + " adalah " + kuliah.get(i).warna);
-		}
-		
+		}		
 	}
 }
 
