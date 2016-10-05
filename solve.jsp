@@ -38,6 +38,7 @@
 			.active {
 				background-color: rgb(11, 158, 255);
 			}
+
 			div.ads {
 				background-color: lightgrey;
 				width: 300px;
@@ -49,6 +50,7 @@
 				border: 1px solid black;
 				border-collapse: collapse;
 			}
+
 			#wrap {
 				float: right;
 			   width:600px;
@@ -62,6 +64,7 @@
 			   float:right;
 			   width:300px;
 			}
+			
 		</style>
 	</head>
 	<body>
@@ -78,6 +81,7 @@
 			String file_name = request.getParameter("name");
 			String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
 			String algorithm = request.getParameter("algo");
+
 			//membaca file
 			int konflik_now = file.hitung_konflik();
 			if (!(algorithm.equals("0"))){
@@ -96,6 +100,7 @@
 				//menghitung konflik saat ini
 				konflik_now = file.hitung_konflik();
 			}
+
 			out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
 			out.println("<br><br>");
 			
