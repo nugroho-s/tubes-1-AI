@@ -38,7 +38,8 @@
 			.active {
 				background-color: rgb(11, 158, 255);
 			}
-			div {
+
+			div.ads {
 				background-color: lightgrey;
 				width: 300px;
 				border: 25px solid green;
@@ -49,6 +50,21 @@
 				border: 1px solid black;
 				border-collapse: collapse;
 			}
+
+			#wrap {
+				float: right;
+			   width:600px;
+			   margin-right:0 auto;
+			}
+			#left_col {
+			   float:left;
+			   width:300px;
+			}
+			#right_col {
+			   float:right;
+			   width:300px;
+			}
+			
 		</style>
 	</head>
 	<body>
@@ -63,24 +79,30 @@
 		<%
 			ServletContext context = pageContext.getServletContext();
 			String file_name = request.getParameter("name");
+			String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
 			String algorithm = request.getParameter("algo");
-			int konflik_now = 0;
-			if(!algorithm.equals("0")){
-				String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
-			
-				//membaca file
+
+			//membaca file
+			int konflik_now = file.hitung_konflik();
+			if (!(algorithm.equals("0"))){
 				file.set_file(full_path);
 				file.baca_file();
 				
 				//inisialisasi random
 				out.println("Setelah diinisialisasi secara random<br>");
-				file.inisialisasi_random();			
+				file.inisialisasi_random();
+				/*for (int i = 0; i < file.kuliah.size(); i++) {
+					out.println(file.kuliah.get(i).jadwal_html());
+					out.println("<br/>");
+				}*/
+				
 				
 				//menghitung konflik saat ini
 				konflik_now = file.hitung_konflik();
-				out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
-				out.println("<br><br>");
 			}
+
+			out.println("Konflik sebelum scheduling= "+konflik_now+"<br/>");
+			out.println("<br><br>");
 			
 			//Algoritma
 			if(algorithm.equals("1")){
@@ -111,18 +133,12 @@
 				//menghitung konflik saat ini
 				konflik_now = g.get_konflik_now();
 			}
-			else{
-				konflik_now=file.hitung_konflik();
-			}
-			
-			out.println("Konflik saat ini= "+konflik_now+"<br/>");
-			out.println("<br><br><br>");
 			
 		%>
-		<% //print jadwal 
-		%>
+		<% //print jadwal %>
 		<table style="width:100%">
-			<%
+		<%
+			file.pewarnaanjadwal();
 			int i, j;
 			int totaljdwlbentrok=0;
 			for (i = 6; i <= 17; i++){
@@ -133,6 +149,7 @@
 				else{
 					for(j = 0; j <= 5; j++){
 						if(j == 0){
+							//out.print("<td><b>"+(i)+".00</b></td>");
 							if(i<10){
 								out.print("<td><b>0"+i+".00</b></td>");
 							}
@@ -160,8 +177,48 @@
 											}
 										}
 										if(!bentrok){
+											String warna = "black";
+											if (file.kuliah.get(k).warna == 1){
+												warna = "blue";
+											} else if (file.kuliah.get(k).warna == 2){
+												warna = "orange";
+											} else if (file.kuliah.get(k).warna == 3){
+												warna = "#5F9EAD";
+											} else if (file.kuliah.get(k).warna == 4){
+												warna = "#03FF0C";
+											} else if (file.kuliah.get(k).warna == 5){
+												warna = "#000030";
+											} else if (file.kuliah.get(k).warna == 6){
+												warna = "#7FFFD4";
+											} else if (file.kuliah.get(k).warna == 7){
+												warna = "#8A2BE2";
+											} else if (file.kuliah.get(k).warna == 8){
+												warna = "#884433";
+											} else if (file.kuliah.get(k).warna == 9){
+												warna = "#F2F200";
+											} else if (file.kuliah.get(k).warna == 10){
+												warna = "#907084";
+											} else if (file.kuliah.get(k).warna == 11){
+												warna = "#FF33DD";
+											} else if (file.kuliah.get(k).warna == 12){
+												warna = "#CCFFDD";
+											} else if (file.kuliah.get(k).warna == 13){
+												warna = "#CCE6FF";
+											} else if (file.kuliah.get(k).warna == 14){
+												warna = "#1A8CFF";
+											} else if (file.kuliah.get(k).warna == 15){
+												warna = "#80BFFF";
+											} else if (file.kuliah.get(k).warna == 16){
+												warna = "#999900";
+											} else if (file.kuliah.get(k).warna == 17){
+												warna = "#999966";
+											} else if (file.kuliah.get(k).warna == 18){
+												warna = "#444444";
+											} 
+											
 											arrayRuangTerpakai.add(new String(file.kuliah.get(k).get_ruang().get_nama()));
-											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
+											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style='color:"+warna+"'>"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
+											file.slotterpakai += 1;
 										}
 										else{
 											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
@@ -178,6 +235,30 @@
 			}
 		%>
 		</table>
+		<br/>
+		<div id="wrap">
+			<div id="left_col">
+			<h3>persentase ruang:</h3>
+				<br/>
+				<%
+					file.hitung_persentase();
+					double total = 0;
+					/*for (int xx=0;xx<file.j_ruang;xx++){
+						total+=file.ruang[xx].persentase;
+						out.println(file.ruang[xx].get_nama() + " = " +(double)Math.round(file.ruang[xx].persentase*100)/100+" %</br>");
+					}
+					total /= file.j_ruang;*/
+					out.println(file.slotterpakai+" "+file.banyakslot+"<br>");
+					total = (file.slotterpakai/file.banyakslot)*100;
+					out.println("total = " +(double)Math.round(total*100)/100+" %</br>");
+				%>
+			</div>
+			<div id="right_col">
+				<h3>konflik:</h3>
+				konflik sekarang <%=konflik_now%><br/>
+			</div>
+		</div>
+		<div class="ads">
 		<div>
 			<%
 				out.println("<br><h2 style=\"text-align:center\">Mencoba algoritma yang lain?</h2><br>");

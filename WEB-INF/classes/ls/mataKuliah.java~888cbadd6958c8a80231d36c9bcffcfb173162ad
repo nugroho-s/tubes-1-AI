@@ -1,5 +1,4 @@
 package ls;
-import java.util.ArrayList;
 
 public class mataKuliah{
 
@@ -11,9 +10,7 @@ public class mataKuliah{
     boolean ubah_ruang;
     int sks;
     day hari;
-	public int warna;
 	public int slot_waktu; // 3 digit, digit 1 hari, digit 2-3 jam
-	public ArrayList<ruangan> Lruang = new  ArrayList<ruangan>();
 
     public mataKuliah(int id, String n, String r, waktu m, waktu s, int sk, day h) {
 		this.id = id;
@@ -47,20 +44,12 @@ public class mataKuliah{
         if (r.equals("-")){
             return null;
         }
-        ruangan temp = new ruangan();
         for (int i = 0; i < file.j_ruang; i++) {
 			if (r.equals((file.ruang[i]).nama)){
-                temp =  file.ruang[i];
-                Lruang.add(temp);
+                return file.ruang[i];
             }
         }
-        temp = Lruang.get(0);
-        if (Lruang.size() ==0) {
-			return null;
-		}
-		else {
-			return temp;
-		}
+        return null;
     }
 	
 	public void print_jadwal(){

@@ -15,12 +15,10 @@ public class file {
     private static Random rnd = new Random();
     public static String lokasi_file;
 	public static int j_ruang = 0;
-	public static ruangan[] ruang = new ruangan[50];
+	public static ruangan[] ruang = new ruangan[10];
 	public static int j_kuliah = 0;
 	public static ArrayList<mataKuliah> kuliah = new ArrayList<mataKuliah>();
 	public static int konflik_now = 0;
-	public static int banyakslot = 0;
-	public static int slotterpakai = 0;
 	
 	public static void main(String args[]) {
 		
@@ -108,15 +106,7 @@ public class file {
 				System.out.println("Konflik = "+g.get_konflik_now());
 			}
 		}
-		
-		pewarnaanjadwal();
-		pindahmanual();
-	}
-	
-	public static void hitung_persentase(){
-		for (int i=0;i<j_ruang;i++){
-			ruang[i].hitung_persentase();
-		}
+		//pindahmanual();
 	}
 	
 	
@@ -140,7 +130,6 @@ public class file {
             else{
                 //harus dicek apakah kelas bisa menampung mata kuliah
                 do{
-					System.out.println("xi");
                     int xi = rnd.nextInt(j_ruang);
                     r = ruang[xi];
                 } while ((r.get_mulai().get_jam()>kuliah.get(i).get_selesai().get_jam())||
@@ -208,22 +197,7 @@ public class file {
         //random hari 1-5
         int h = rnd.nextInt(5);
         h+=1;
-        int z = 0;
-        int iz = 1;
-        int max_ = 0;
         while (!((r.get_hari().isOnDay(h)) && (mk.get_hari().isOnDay(h)))){
-			z++;
-			max_ ++;
-			if (z > 200 && mk.Lruang.size() > iz) 
-			{
-				z = 0;
-				r = mk.Lruang.get(iz);
-				mk.set_ruang_ref(r);
-				iz++;
-			}
-			if (max_ >1000) {
-					break;
-				}
             h = rnd.nextInt(5);
             h+=1;
         }
@@ -232,22 +206,7 @@ public class file {
         range = range-mk.get_mulai().get_jam()+1;
         int jam = rnd.nextInt(range);
         jam+=mk.get_mulai().get_jam();
-        z = 0;
-        iz = 1;
-        max_ = 0;
         while ((jam+mk.get_sks()>r.get_selesai().get_jam())||(jam<r.get_mulai().get_jam())){
-			z++;
-			max_++;
-			if (z > 200 && mk.Lruang.size() > iz) {
-				z = 0;
-				r = mk.Lruang.get(iz);
-				mk.set_ruang_ref(r);
-				iz++;
-				
-			}
-			if (max_ >1000) {
-					break;
-			}
             jam = rnd.nextInt(range);
             jam+=mk.get_mulai().get_jam();
         }
@@ -261,7 +220,7 @@ public class file {
 			int sks = kuliah.get(x).get_sks();
 			
 			for (int y=x+1; y<kuliah.size(); y++){
-				if (kuliah.get(x).get_ruang().get_nama() == kuliah.get(y).get_ruang().get_nama()){
+				if (kuliah.get(x).get_ruang() == kuliah.get(y).get_ruang()){
 					if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
 						//hari sama
 						int kodey = kuliah.get(y).get_slot();
@@ -318,7 +277,6 @@ public class file {
         String[] temp = x.split(";");
         waktu mulai = waktu.konversikewaktu(temp[1]);
         waktu selesai = waktu.konversikewaktu(temp[2]);
-        file.banyakslot = file.banyakslot + (selesai.jam - mulai.jam);
         String[] daySplit = temp[3].split(",");
         day hari = new day();
         for (int i = 0; i < daySplit.length; i++) {
@@ -419,65 +377,7 @@ public class file {
 		}
 	}
     
-    // Inisialisasi warna
-    public static void setwarna(){
-		for (int i=0; i<kuliah.size(); i++){
-			kuliah.get(i).warna=0;	// 0 berarti tidak berwarna
-		}
-	}
     
-    public static boolean warnasama(mataKuliah mk1){
-		
-		int i = 0;
-		boolean bool1=false;
-		
-		while((i<kuliah.size()) && (!bool1)){
-			if ((mk1!=kuliah.get(i)) && (jadwalbersinggungan(mk1,kuliah.get(i))) && (mk1.warna==kuliah.get(i).warna) ){
-				bool1=true;
-			}
-			i++;
-		}
-		
-	
-		
-		return bool1;
-	}
-    
-    public static boolean jadwalbersinggungan(mataKuliah mk1,mataKuliah mk2){
-		boolean ada;
-		
-		ada=false;
-		
-		int i = mk1.slot_waktu;
-		int mm = mk1.slot_waktu;
-		int j = mk2.slot_waktu;
-		int nn = mk2.slot_waktu;
-		
-		
-		while ((i<=mm+mk1.sks) && !(ada)){
-			while ((j<=nn+mk2.sks) && !(ada)){
-				if((i+1==j) || (i==j+1) || (i+100==j) || (i==100+j) || (i==j)){
-					//System.out.println("Ada sama");
-					ada = true;
-				}
-				j++;
-			}
-			i++;
-		}
-		
-		
-		return (ada);
-	}
-	
-	public static void pewarnaanjadwal(){
-		
-		setwarna();
-		int a=1;
-		for (int i=0; i<kuliah.size(); i++){
-			kuliah.get(i).warna=a;
-				a++;
-		}		
-	}
 }
 
 
