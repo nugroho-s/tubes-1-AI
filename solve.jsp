@@ -81,6 +81,8 @@
 			String file_name = request.getParameter("name");
 			String full_path = request.getServletContext().getRealPath("")+context.getInitParameter("file-upload") + file_name;
 			String algorithm = request.getParameter("algo");
+			file.slotterpakai = 0;
+			file.banyakslot = 0;
 
 			//membaca file
 			int konflik_now = file.hitung_konflik();
@@ -249,7 +251,7 @@
 					}
 					total /= file.j_ruang;*/
 					out.println(file.slotterpakai+" "+file.banyakslot+"<br>");
-					total = (file.slotterpakai/file.banyakslot)*100;
+					total = ((double)file.slotterpakai/(double)file.banyakslot)*100;
 					out.println("total = " +(double)Math.round(total*100)/100+" %</br>");
 				%>
 			</div>
