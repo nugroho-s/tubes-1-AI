@@ -7,6 +7,15 @@
 <%@ page import="ls.annealing"%>
 <%@ page import="ls.genetic"%>
 <%@ page import="java.util.ArrayList" %>
+<%!
+int hitung_konflik(int sama){
+	int res = 0;
+	for (int i=0;i<sama;i++){
+		res += i;
+	}
+	return res;
+}
+%>
 <html>
 	<head>
 		<title> Penjadwalan </title>
@@ -137,7 +146,7 @@
 			}
 			
 		%>
-		<% //print jadwal %>
+		<% %>
 		<table style="width:100%">
 		<%
 			file.pewarnaanjadwal();
@@ -160,6 +169,7 @@
 							}
 						}
 						else{
+							int j_sama = 1;
 							out.print("<td>");
 							boolean found = false;
 							boolean bentrok;
@@ -224,11 +234,14 @@
 										}
 										else{
 											out.print("<a href=\"infoubahjadwal.jsp?IDmatkul="+file.kuliah.get(k).get_id()+"&name="+file_name+"\"><b style=\"color:red;\">"+file.kuliah.get(k).get_nama()+" - "+file.kuliah.get(k).get_ruang().get_nama()+"</b></a>");
+											j_sama++;
 										}
 										found = true;
 									}
 								}
 							}
+							//out.println(j_sama);
+							//konflik_now += hitung_konflik(j_sama);
 							out.print("</td>");
 						}
 					}
@@ -257,7 +270,8 @@
 			</div>
 			<div id="right_col">
 				<h3>konflik:</h3>
-				konflik sekarang <%=konflik_now%><br/>
+				konflik sekarang <%=file.hitung_konflik()%><br/>
+				konflik 1 lagi <%=file.hitung_konflik(file.kuliah)%><br/>
 			</div>
 		</div>
 		<div class="ads">

@@ -140,7 +140,6 @@ public class file {
             else{
                 //harus dicek apakah kelas bisa menampung mata kuliah
                 do{
-					System.out.println("xi");
                     int xi = rnd.nextInt(j_ruang);
                     r = ruang[xi];
                 } while ((r.get_mulai().get_jam()>kuliah.get(i).get_selesai().get_jam())||
@@ -260,25 +259,30 @@ public class file {
 			int kode = kuliah.get(x).get_slot();
 			int sks = kuliah.get(x).get_sks();
 			
-			for (int y=x+1; y<kuliah.size(); y++){
-				if (kuliah.get(x).get_ruang().get_nama() == kuliah.get(y).get_ruang().get_nama()){
-					if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
-						//hari sama
-						int kodey = kuliah.get(y).get_slot();
-						if (kodey == kode)
-							konflik++;
-						else if (kodey < kode) {
-							if (kodey+kuliah.get(y).get_sks() > kode)
+			while (sks>0){
+				for (int y=x+1; y<kuliah.size(); y++){
+					if (kuliah.get(x).get_ruang().get_nama() == kuliah.get(y).get_ruang().get_nama()){
+						if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
+							//hari sama
+							int kodey = kuliah.get(y).get_slot();
+							if (kodey == kode)
 								konflik++;
-						}
-						else{
-							if (kode+sks > kodey)
-								konflik++;
+							else if (kodey < kode) {
+								if (kodey+kuliah.get(y).get_sks() > kode)
+									konflik++;
+							}
+							else{
+								if (kode+sks > kodey)
+									konflik++;
+							}
 						}
 					}
 				}
+				sks--;
+				kode++;
 			}
 		}
+		System.out.println(konflik);
 		return konflik;
 	}
 	
@@ -318,12 +322,12 @@ public class file {
         String[] temp = x.split(";");
         waktu mulai = waktu.konversikewaktu(temp[1]);
         waktu selesai = waktu.konversikewaktu(temp[2]);
-        file.banyakslot = file.banyakslot + (selesai.jam - mulai.jam);
         String[] daySplit = temp[3].split(",");
         day hari = new day();
         for (int i = 0; i < daySplit.length; i++) {
             hari.set_hari(Integer.parseInt(daySplit[i]), true);
         }
+        file.banyakslot = file.banyakslot + (selesai.jam - mulai.jam) * hari.jumlah_hari();
         ruang[j_ruang++] = new ruangan(temp[0], mulai, selesai, hari);
     }
 

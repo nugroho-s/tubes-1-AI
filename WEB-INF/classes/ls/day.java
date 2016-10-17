@@ -38,6 +38,15 @@ public class day {
         }
     }
 
+    public int jumlah_hari(){
+        int j = 0;
+        for (int i=1;i<6;i++){
+            if (isOnDay(i))
+                j++;
+        }
+        return j;
+    }
+
     public boolean get_hari_ke(int x) {
         return hari[x];
     }
