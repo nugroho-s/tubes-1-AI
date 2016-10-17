@@ -261,7 +261,7 @@ public class file {
 			
 			while (sks>0){
 				for (int y=x+1; y<kuliah.size(); y++){
-					if (kuliah.get(x).get_ruang().get_nama() == kuliah.get(y).get_ruang().get_nama()){
+					if ((kuliah.get(x).get_ruang().get_nama()).equals(kuliah.get(y).get_ruang().get_nama())){
 						if (Math.abs(kode-kuliah.get(y).get_slot()) < 50){
 							//hari sama
 							int kodey = kuliah.get(y).get_slot();
